@@ -21,7 +21,7 @@ void led_test(void)
 	TIM3_Init();  			
 	while(1)
 	{
-		SerialPutString("Please input the led light number[0-100]...(press a to abort)\n\r");
+		SerialPutString("Please input the led light number[0-100]...(press 'a' to abort)\n\r");
 		if(GetIntegerInput(&num) == 0)
 		{
 			TIM_SetCompare1(TIM3, 0);
