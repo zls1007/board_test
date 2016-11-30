@@ -35,7 +35,9 @@
 *					PE14  CH1
 *					PE13	CH2
 *					PE11	CH3
-*					PE9   CH4
+*			//		PE9   CH4  GND
+*			//    PD13	GND
+*			//		PD14  GND
 ******************************************************************************/
 void TIM1_Init(void)
 {	 
@@ -47,17 +49,35 @@ void TIM1_Init(void)
 		//打开时钟
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);  
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD,ENABLE);
 	
-		//GPIO设置
-		GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9 | GPIO_Pin_11 |GPIO_Pin_13 |GPIO_Pin_14;
+		//GPIO设置  PWM 复用输出
+//		GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9 | GPIO_Pin_11 |GPIO_Pin_13 |GPIO_Pin_14;
+		GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_11 |GPIO_Pin_13 |GPIO_Pin_14;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 		GPIO_Init(GPIOE, &GPIO_InitStructure);
+	
+		//GPIO  IO  推挽输出PE9
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;			//选定引脚
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;					//设置为普通输出
+		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;		//输出频率为100MHz
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;					//设置为上拉   GPIO_PuPd_NOPULL(不上拉)	
+		GPIO_Init(GPIOE,&GPIO_InitStructure);
+		//GPIO  IO  推挽输出PD13 PD14
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14;			//选定引脚
+		GPIO_Init(GPIOD,&GPIO_InitStructure);
+		
+		//低电平输出
+		GPIO_ResetBits(GPIOE,GPIO_Pin_9);
+		GPIO_ResetBits(GPIOD,GPIO_Pin_13);
+		GPIO_ResetBits(GPIOD,GPIO_Pin_14);
 
 		//重定向IO口
-		GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
+//		GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
 		GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
 		GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_TIM1);
 		GPIO_PinAFConfig(GPIOE, GPIO_PinSource14, GPIO_AF_TIM1);
@@ -84,8 +104,8 @@ void TIM1_Init(void)
 		TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 		TIM_OCInitStructure.TIM_Pulse = 1522;
 		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-		TIM_OC1Init(TIM1, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
+//		TIM_OC1Init(TIM1, &TIM_OCInitStructure);
+//		TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
 		//通道2 	
 		TIM_OCInitStructure.TIM_Pulse = 1522;
 		TIM_OC2Init(TIM1, &TIM_OCInitStructure);

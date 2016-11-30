@@ -112,7 +112,7 @@ void moter_test(void)
 			TIM_SetCompare4(TIM1, num);
 			TIM_SetCompare3(TIM1, num);
 			TIM_SetCompare2(TIM1, num);
-			TIM_SetCompare1(TIM1, num);
+			//TIM_SetCompare1(TIM1, num);
 		}
 	}
 }
