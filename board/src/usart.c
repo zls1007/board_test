@@ -75,7 +75,7 @@ void USART1_Config(void)
   	USART_Cmd(USART1, ENABLE);
   	//USART_ClearFlag(USART3, USART_FLAG_TC);
 		
-		usart_print_str(USART1, "usart1 has inited, your input will be loop back!\r\n");
+		//usart_print_str(USART1, "usart1 has inited, your input will be loop back!\r\n");
 }
 
 /****************************************************************************
@@ -126,7 +126,7 @@ void USART2_Config(void)
   	USART_Cmd(USART2, ENABLE);
   	//USART_ClearFlag(USART3, USART_FLAG_TC);
 		
-		usart_print_str(USART2, "usart1 has inited, your input will be loop back!\r\n");
+		//usart_print_str(USART2, "usart1 has inited, your input will be loop back!\r\n");
 }
 
 
@@ -178,7 +178,7 @@ void USART3_Config(void)
   	USART_Cmd(USART3, ENABLE);
   	//USART_ClearFlag(USART3, USART_FLAG_TC);
 		
-		usart_print_str(USART3, "usart1 has inited, your input will be loop back!\r\n");
+		//usart_print_str(USART3, "usart1 has inited, your input will be loop back!\r\n");
 }
 
 /****************************************************************************
@@ -229,7 +229,7 @@ void UART4_Config(void)
   	USART_Cmd(UART4, ENABLE);
   	//USART_ClearFlag(USART3, USART_FLAG_TC);
 		
-		usart_print_str(UART4, "usart1 has inited, your input will be loop back!\r\n");
+		//usart_print_str(UART4, "usart1 has inited, your input will be loop back!\r\n");
 }
 
 /****************************************************************************

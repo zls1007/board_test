@@ -13,12 +13,13 @@ __IO uint16_t ADC_ConvertedValue[2];
 //姿态传感器接收到的数据
 int16_t imu[10] = {0};
 
+//
+u8 usart_flag = 0;
+
 void led_test(void)
 {
 	int32_t num;
-	
-	//TIM3 pwm 初始化
-	TIM3_Init();  			
+				
 	while(1)
 	{
 		SerialPutString("Please input the led light number[0-100]...(press 'a' to abort)\n\r");
@@ -42,25 +43,25 @@ void led_test(void)
 
 void usart_test(void)
 {
-	uint8_t key = 0;	
+	uint8_t inputstr[16];
+	
+	usart_flag = 1;
 	while(1)
 	{
-		SerialPutString("Please choose a device...\r\n\n");
-		SerialPutString("  a:usart1   b:usart2  c:usart3  d:usart4  e:exit \r\n");
-		key = GetKey();
-		if(key == 'e')
-		{
-			usart_deinit();
-			break;
-		}
-		switch(key)
-		{
-			case 'a':  usart_deinit();  USART1_Config(); break;
-			case 'b':  usart_deinit();  USART2_Config(); break;
-			case 'c':  usart_deinit();  USART3_Config(); break;
-			case 'd':  usart_deinit();  UART4_Config(); break;
-			default: SerialPutString("Invalid Input ! ==> The input should be either a,b,c,d or e\r"); break;
-		}
+		SerialPutString("Please input the chars send to all usarts...(press 'a' to abort)\n\r");
+		GetInputString(inputstr);
+    if (inputstr[0] == '\0') continue;
+    if ((inputstr[0] == 'a' || inputstr[0] == 'A') && inputstr[1] == '\0')
+    {
+      SerialPutString("User Cancelled \r\n");
+			usart_flag = 0;
+      break;
+    }
+		
+		usart_print_str(USART1, (char *)inputstr);
+		usart_print_str(USART2, (char *)inputstr);
+		usart_print_str(USART3, (char *)inputstr);
+		usart_print_str(UART4, (char *)inputstr);
 	}
 }
 
@@ -86,9 +87,7 @@ void adc_test(void)
 void moter_test(void)
 {
 	int32_t num;
-	
-	//TIM1 pwm 初始化
-	TIM1_Init();  			
+				
 	while(1)
 	{
 		SerialPutString("Please input the moter speed [0-100]...(50 is the center, press 'a' to abort)\n\r");

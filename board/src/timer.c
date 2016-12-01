@@ -186,7 +186,7 @@ void TIM3_Init(void)
 		TIM_OC1Init(TIM3, &TIM_OCInitStructure);
 		TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 		//Í¨µÀ2 	
-		TIM_OCInitStructure.TIM_Pulse = 500;
+		TIM_OCInitStructure.TIM_Pulse = 0;
 		TIM_OC2Init(TIM3, &TIM_OCInitStructure);
 		TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
