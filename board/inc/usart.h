@@ -13,6 +13,7 @@ void UART7_Config(void);
 int fputc(int ch, FILE *f);
 void usart_deinit(void);
 void usart_print_str(USART_TypeDef *usart, char *buf);
+void usart_print(USART_TypeDef *usart, u8 buf[], u8 size);
 
 #endif
 

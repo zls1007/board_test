@@ -28,21 +28,27 @@ void TIM2_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
 	u8 c;
-	static u8 buf[16];
+	static u8 buf[100];
 	static u8 cnt = 0;
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
 		c = USART_ReceiveData(USART1);
 		
 		buf[cnt ++] = c;
-		if(cnt > 15 || c == '\n')
+		if(c == '\n')
 		{
+			//buf[cnt] = '\0';
 			if(usart_flag)
 			{
-				printf("USART1 receive: %s \r\n", buf);
+				printf("USART1 receive: %s", buf);
 			}
 			memset(buf, 0, 16);
 			cnt = 0;
+		}
+		else if(cnt > 90)
+		{
+			cnt = 0;
+			memset(buf, 0, 100);
 		}
 	
 		USART_SendData(USART1, c);
@@ -68,7 +74,8 @@ void USART2_IRQHandler(void)
 		{
 			if(usart_flag)
 			{
-				printf("USART2 receive: %s \r\n", buf);
+				//printf("USART2 receive: %s \r\n", buf);
+				usart_print(UART7, buf, cnt);
 			}
 			memset(buf, 0, 16);
 			cnt = 0;
@@ -93,11 +100,12 @@ void USART3_IRQHandler(void)
 		c = USART_ReceiveData(USART3);
 		
 		buf[cnt ++] = c;
-		if(cnt > 15 || c == '\n')
+		if(cnt > 14 || c == '\n')
 		{
 			if(usart_flag)
 			{
-				printf("USART3 receive: %s \r\n", buf);
+				//printf("USART3 receive: %s \r\n", buf);
+				usart_print(UART7, buf, cnt);
 			}
 			memset(buf, 0, 16);
 			cnt = 0;
@@ -125,11 +133,12 @@ void UART4_IRQHandler(void)
 		USART_SendData(UART4, c);   
 		
 		buf[cnt ++] = c;
-		if(cnt > 15 || c == '\n')
+		if(cnt > 14 || c == '\n')
 		{
 			if(usart_flag)
 			{
-				printf("UART4 receive: %s \r\n", buf);
+				//printf("UART4 receive: %s \r\n", buf);
+				usart_print(UART7, buf, cnt);
 			}
 			memset(buf, 0, 16);
 			cnt = 0;

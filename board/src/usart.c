@@ -44,8 +44,8 @@ void USART1_Config(void)
   	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
   	
 		//¸´ÓÃIOÒý½Å
-		GPIO_PinAFConfig(GPIOD, GPIO_PinSource6, GPIO_AF_USART1);  
-  	GPIO_PinAFConfig(GPIOD, GPIO_PinSource7, GPIO_AF_USART1);
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_USART1);  
+  	GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_USART1);
 	
 		//GPIOÅäÖÃ
   	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
@@ -315,6 +315,20 @@ void usart_print_str(USART_TypeDef *usart, char *buf)
 		USART_SendData(usart, *buf);
   	while (USART_GetFlagStatus(usart, USART_FLAG_TC) == RESET);
 		buf++;
+	}
+}
+
+/****************************************************************************
+*		  Êä³ö×Ö·û
+*			
+******************************************************************************/
+void usart_print(USART_TypeDef *usart, u8 buf[], u8 size)
+{
+	u8 i;
+	for(i=0; i<size; i++)
+	{
+		USART_SendData(usart, buf[i]);
+  	while (USART_GetFlagStatus(usart, USART_FLAG_TC) == RESET);
 	}
 }
 
