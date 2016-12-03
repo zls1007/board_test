@@ -136,18 +136,19 @@ void ms5611_test(void)
 	
 	float temper, pressure, altitude;
 	
-	 //大气压强模块初始化
-   SPI2_Init();                                    //SPI1初始化
-   SPI2_SetSpeed(SPI_BaudRatePrescaler_256);	   	 //设置SPI速率  128M/256=500KHZ
-   MS5611_RESET();                                 //MS5611初始化
-   MS5611_PROM_READ();                             //读取存储器(128-bit PROM)
-	 delay_ms(100);
+//	 //大气压强模块初始化
+//   SPI2_Init();                                    //SPI1初始化
+//   SPI2_SetSpeed(SPI_BaudRatePrescaler_256);	   	 //设置SPI速率  128M/256=500KHZ
+//   MS5611_RESET();                                 //MS5611初始化
+//   MS5611_PROM_READ();                             //读取存储器(128-bit PROM)
+//	 delay_ms(100);
+	MS5611_Config();
 	while(cont--)
 	{
 		//采集气压计
 		temper = MS5611_getTemperature(CMD_CONVERT_D2_OSR4096);
 		pressure = MS5611_getPressure(CMD_CONVERT_D1_OSR4096);
-		altitude = get_altitude();
+		//altitude = get_altitude();
 		printf("pressure=%.3f  temper=%.3f\r\n", pressure, temper);
 		delay_ms(200);
 	}

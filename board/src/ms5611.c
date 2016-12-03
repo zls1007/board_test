@@ -271,6 +271,21 @@ float get_altitude(void)
   return (Altitude);
 }
 
+/*******************************************************************************
+	大气压初始化
+	函数名称：MS5611_Config();
+	输入参数：void
+	输出参数：void
+*******************************************************************************/
+void MS5611_Config(void)
+{
+	 SPI2_Init();                                    //SPI1初始化
+   SPI2_SetSpeed(SPI_BaudRatePrescaler_256);	   //设置SPI速率  128M/256=500KHZ
+   MS5611_RESET();                                 //MS5611初始化
+   MS5611_PROM_READ();                             //读取存储器(128-bit PROM)
+	 delay_ms(100);
+}
+
 /*end*/
 
 

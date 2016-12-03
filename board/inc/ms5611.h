@@ -33,4 +33,5 @@ long MS5611_SPI_read_ADC(void);
 float MS5611_getPressure(unsigned char OSR_Pres);
 float MS5611_getTemperature(unsigned char OSR_Temp);
 float get_altitude(void);
+void MS5611_Config(void);
 #endif
