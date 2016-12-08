@@ -12,6 +12,8 @@
 #include "timer.h"
 #include "usart.h"
 #include "led.h"
+#include "iic.h"
+
 
 int main(void)
 {
@@ -28,7 +30,10 @@ int main(void)
 	
 	TIM1_Init();  			//TIM1 pwm 初始化   电机控制
 	TIM3_Init();  			//TIM3 pwm 初始化   led亮度
+	I2C_init();
+	
 
+	
 	Main_Menu();  			//显示主菜单
 
 }

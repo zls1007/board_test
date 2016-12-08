@@ -181,12 +181,12 @@ void TIM3_Init(void)
 		//通道1
 		TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 		TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-		TIM_OCInitStructure.TIM_Pulse = 0;
+		TIM_OCInitStructure.TIM_Pulse = 200;
 		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 		TIM_OC1Init(TIM3, &TIM_OCInitStructure);
 		TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 		//通道2 	
-		TIM_OCInitStructure.TIM_Pulse = 0;
+		TIM_OCInitStructure.TIM_Pulse = 200;
 		TIM_OC2Init(TIM3, &TIM_OCInitStructure);
 		TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
 

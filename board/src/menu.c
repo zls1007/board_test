@@ -6,6 +6,7 @@
 #include "mpu9250.h"
 #include "ms5611.h"
 #include "adc.h"
+#include "battery.h"
 
 //adc 转换的数据
 __IO uint16_t ADC_ConvertedValue[2];
@@ -25,8 +26,8 @@ void led_test(void)
 		SerialPutString("Please input the led light number[0-100]...(press 'a' to abort)\n\r");
 		if(GetIntegerInput(&num) == 0)
 		{
-			TIM_SetCompare1(TIM3, 0);
-			TIM_SetCompare2(TIM3, 0);
+			//TIM_SetCompare1(TIM3, 0);
+			//TIM_SetCompare2(TIM3, 0);
 			break;
 		}
 		else if(num < 0 || num > 100)
@@ -161,7 +162,14 @@ void hmc5983_test(void)
 
 void i2c_test(void)
 {
-	SerialPutString(" please waitint....\r\n");
+	uint8_t cont = 50;
+
+	while(cont--)
+	{
+		//采集电池参数
+		ReadBatteryInfo();
+		delay_ms(200);
+	}
 }
 
 void SDCard_test(void)
