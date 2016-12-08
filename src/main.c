@@ -13,14 +13,15 @@
 #include "usart.h"
 #include "led.h"
 #include "iic.h"
+#include "delay.h"
 
 
 int main(void)
 {
 
-	
+	u32 time;
 	UART7_Config();			//调试接口
-	TIM2_Init();     		//0.5s 定时中断
+	//TIM2_Init();     		//0.5s 定时中断
 	GPIO_Config();			//蜂鸣器
 	
 	USART1_Config();
@@ -32,7 +33,6 @@ int main(void)
 	TIM3_Init();  			//TIM3 pwm 初始化   led亮度
 	I2C_init();
 	
-
 	
 	Main_Menu();  			//显示主菜单
 

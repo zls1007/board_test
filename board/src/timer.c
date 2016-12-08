@@ -200,7 +200,7 @@ void TIM3_Init(void)
 *			TIM2 时钟中断
 *
 *			对84MHz（TIM3时钟源为168MHz/2）   8M
-*			0.5s  定时中断
+*			1us  定时中断
 ******************************************************************************/
 void TIM2_Init(void)
 {
@@ -219,8 +219,8 @@ void TIM2_Init(void)
 		NVIC_Init(&NVIC_InitStructure);		
 
 		//定时器设置
-		TIM_TimeBaseStructure.TIM_Period = 1000;
-		TIM_TimeBaseStructure.TIM_Prescaler = 42000-1;
+		TIM_TimeBaseStructure.TIM_Period = 84-1;
+		TIM_TimeBaseStructure.TIM_Prescaler = 0;
 		TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 		TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 		TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);

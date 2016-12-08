@@ -51,11 +51,10 @@ u16 Battery_Read_Word(u8 command)
 }
 
 //==========================================
-//读取半字
+//读取字节
 //==========================================
-u8 Battery_Read_Halfword(u8 command)
+u16 Battery_Read_Halfword(u8 command)
 {
-
 	u8 i = 0;
 	u8 read_buf[3];  	//暂存读取的数据
 	u8 crc = 0x00;   	//crc校验值
@@ -67,6 +66,12 @@ u8 Battery_Read_Halfword(u8 command)
 	I2C_Write(command);    				 	//发送存储单元地址
 	I2C_Start();                				//起始信号
 	I2C_Write(SlaveAddress+1); 	//发送设备地址+读信号（+1）	
+	for(i=0; i<10; i++)
+	{
+		I2C_Delay();  //延时
+	}
+	
+
 	for(i = 0;i < 3;i++)
 	{
 		read_buf[i] = I2C_Read();
@@ -77,11 +82,25 @@ u8 Battery_Read_Halfword(u8 command)
 	}
 	I2C_Stop();			//读取完成
 	
-	delay_ms(1);
-
-	//printf("value:%d\r\n", halfword);
+	delay_ms(2);
+	//word = ((u16)read_buf[1]<<8) + read_buf[0];
+	word = read_buf[1]*0xff + read_buf[0];
+	//printf("value:%d, %d, %d\r\n", read_buf[0], read_buf[1], read_buf[2]);
 	
-	return read_buf[0];
+	//crc 校验
+	crc = GetCrc8(crc, SlaveAddress);
+	crc = GetCrc8(crc, command);
+	crc = GetCrc8(crc, SlaveAddress+1);
+	crc = GetCrc8(crc, read_buf[0]);
+	crc = GetCrc8(crc, read_buf[1]);
+	if(crc != read_buf[2])
+		return 0;
+	else
+	{
+		//printf("crc ok\r\n");
+		return word;
+	}		
+	
 }
 
 

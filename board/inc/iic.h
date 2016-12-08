@@ -23,6 +23,7 @@
 //=========================
 //º¯ÊıÉùÃ÷
 //=========================
+void I2C_Delay(void)  ;
 void I2C_init(void);
 void I2C_Write_Reg(unsigned char REG_Address,unsigned char REG_data);
 unsigned char I2C_Read_Reg(unsigned char REG_Address);

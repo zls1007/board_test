@@ -5,7 +5,7 @@ void I2C_Delay(void)   // 5us
 {
     unsigned char a,b;
     for(b=51;b>0;b--)
-        for(a=150;a>0;a--);
+        for(a=40;a>0;a--);
 }
 //=================================
 //I2CрЩ╫ееДжц

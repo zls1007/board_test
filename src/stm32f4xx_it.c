@@ -6,16 +6,18 @@
 #include "seril_deal.h"
 
 extern u8 usart_flag;
+extern __IO u32 sys_tick;
 
 /****************************************************************************
-*										定时器2中断服务函数（0.5s定时中断）
+*										定时器2中断服务函数（1us定时中断）
 ******************************************************************************/
 void TIM2_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
 	{		
 		//小灯闪烁
-		GPIO_ToggleBits(GPIOA, GPIO_Pin_15);
+		//GPIO_ToggleBits(GPIOA, GPIO_Pin_15);
+		sys_tick ++;
 		
 		//清空标志位
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);	
